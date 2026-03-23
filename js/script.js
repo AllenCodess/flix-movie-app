@@ -3,7 +3,7 @@ const global = {
 };
 
 async function displayPopularMovies() {
-  const results = await fetchAPIData("movie/popular");
+  const { results } = await fetchAPIData("movie/popular");
   console.log(results);
 }
 
@@ -13,7 +13,7 @@ async function fetchAPIData(endpoint) {
   const response = await fetch(`${apiUrl}${endpoint}?api_key=${apiKey}`);
   const data = await response.json();
 
-  console.log(data);
+  return data;
 }
 
 function highlightSection() {
@@ -29,7 +29,7 @@ function init() {
   switch (global.currentPage) {
     case "/":
     case "/index.html":
-      console.log("Home");
+      displayPopularMovies();
       break;
     case "/shows.html":
       console.log("Shows");
@@ -49,5 +49,4 @@ function init() {
 
 document.addEventListener("DOMContentLoaded", function () {
   init();
-  displayPopularMovies();
 });
