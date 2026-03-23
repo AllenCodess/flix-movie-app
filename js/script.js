@@ -2,6 +2,20 @@ const global = {
   currentPage: window.location.pathname,
 };
 
+async function displayPopularMovies() {
+  const results = await fetchAPIData("movie/popular");
+  console.log(results);
+}
+
+async function fetchAPIData(endpoint) {
+  const apiKey = "9de76fd013cee893b1bef49f5429526a";
+  const apiUrl = "https://api.themoviedb.org/3/";
+  const response = await fetch(`${apiUrl}${endpoint}?api_key=${apiKey}`);
+  const data = await response.json();
+
+  console.log(data);
+}
+
 function highlightSection() {
   document.querySelectorAll(".nav-link").forEach((link) => {
     if (link.getAttribute("href") === global.currentPage) {
@@ -35,4 +49,5 @@ function init() {
 
 document.addEventListener("DOMContentLoaded", function () {
   init();
+  displayPopularMovies();
 });
