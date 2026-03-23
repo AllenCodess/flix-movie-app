@@ -34,6 +34,38 @@ async function displayPopularMovies() {
   });
 }
 
+async function displayPopularShows() {
+  const { results } = await fetchAPIData("tv/popular");
+  results.forEach((movie) => {
+    const div = document.createElement("div");
+    div.classList.add("card");
+    div.innerHTML = ` <div>
+          <a href="movie-details.html?id=${movie.id}">
+            ${
+              movie.poster_path
+                ? `<img
+              src="https://image.tmdb.org/t/p/w500${movie.poster_path}"
+              class="card-img-top"
+              alt="${movie.title}"
+            />`
+                : `<img 
+            src="../images/no-image.jpg"
+            class="card-img-top"
+            alt="${movie.title}">`
+            }
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">${movie.title}</h5>
+            <p class="card-text">
+              <small class="text-muted">${movie.release_date}</small>
+            </p>
+          </div>
+        </div>`;
+    const popularMoviesEl = document.querySelector("#popular-movies");
+    popularMoviesEl.appendChild(div);
+  });
+}
+
 async function fetchAPIData(endpoint) {
   const apiKey = "9de76fd013cee893b1bef49f5429526a";
   const apiUrl = "https://api.themoviedb.org/3/";
