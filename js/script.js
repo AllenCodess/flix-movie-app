@@ -9,7 +9,18 @@ async function displayPopularMovies() {
     div.classList.add("card");
     div.innerHTML = ` <div>
           <a href="movie-details.html?id=${movie.id}">
-            
+            ${
+              movie.poster_path
+                ? `<img
+              src="https://image.tmdb.org/t/p/w500${movie.poster_path}"
+              class="card-img-top"
+              alt="${movie.title}"
+            />`
+                : `<img 
+            src="../images/no-image.jpg"
+            class="card-img-top"
+            alt="${movie.title}">`
+            }
           </a>
           <div class="card-body">
             <h5 class="card-title">${movie.title}</h5>
@@ -20,7 +31,6 @@ async function displayPopularMovies() {
         </div>`;
     const popularMoviesEl = document.querySelector("#popular-movies");
     popularMoviesEl.appendChild(div);
-    console.log(results[0].title);
   });
 }
 
