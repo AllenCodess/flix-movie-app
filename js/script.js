@@ -4,7 +4,24 @@ const global = {
 
 async function displayPopularMovies() {
   const { results } = await fetchAPIData("movie/popular");
-  console.log(results);
+  results.forEach((movie) => {
+    const div = document.createElement("div");
+    div.classList.add("card");
+    div.innerHTML = ` <div>
+          <a href="movie-details.html?id=${movie.id}">
+            
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">${movie.title}</h5>
+            <p class="card-text">
+              <small class="text-muted">${movie.release_date}</small>
+            </p>
+          </div>
+        </div>`;
+    const popularMoviesEl = document.querySelector("#popular-movies");
+    popularMoviesEl.appendChild(div);
+    console.log(results[0].title);
+  });
 }
 
 async function fetchAPIData(endpoint) {
