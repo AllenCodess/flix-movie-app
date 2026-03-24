@@ -75,20 +75,30 @@ async function MovieDetails() {
   console.log(movieId);
   const movie = await fetchAPIData(`movie/${movieId}`);
   console.log(movie);
+
+  displayBackgroundImage("movie", movie.backdrop_path);
+
   const div = document.createElement("div");
   div.innerHTML = ` <div class="details-top">
           <div>
-            <img
+            ${
+              movie.poster_path
+                ? `<img
               src="https://image.tmdb.org/t/p/w500${movie.poster_path}"
               class="card-img-top"
-              alt="Movie Title"
-            />
+              alt="${movie.title}"
+            />`
+                : `<img 
+            src="../images/no-image.jpg"
+            class="card-img-top"
+            alt="${movie.title}">`
+            }
           </div>
           <div>
             <h2>${movie.original_title}</h2>
             <p>
               <i class="fas fa-star text-primary"></i>
-              ${movie.vote_average}
+              ${movie.vote_average.toFixed(1)} / 10
             </p>
             <p class="text-muted">Release Date: ${movie.release_date}</p>
             <p>
@@ -96,23 +106,23 @@ async function MovieDetails() {
             </p>
             <h5>Genres</h5>
             <ul class="list-group">
-              <li>${movie.genres[0].name}</li>
-              <li>${movie.genres[1].name}</li>
-              <li>${movie.genres[2].name}</li>
+           ${movie.genres.map((genre) => `<li>${genre.name}</li>`).join("")}
             </ul>
-            <a href="#" target="_blank" class="btn">Visit Movie Homepage</a>
+            <a href="${movie.homepage}" target="_blank" class="btn">Visit Movie Homepage</a>
           </div>
         </div>
         <div class="details-bottom">
           <h2>Movie Info</h2>
           <ul>
-            <li><span class="text-secondary">Budget:</span>${movie.budget}</li>
-            <li><span class="text-secondary">Revenue:</span> ${movie.revenue}</li>
-            <li><span class="text-secondary">Runtime:</span> ${movie.runtime}</li>
+            <li><span class="text-secondary">Budget: </span>$${addCommasToNumber(movie.budget)}</li>
+            <li><span class="text-secondary">Revenue: </span>$${addCommasToNumber(movie.revenue)}</li>
+            <li><span class="text-secondary">Runtime:</span> ${movie.runtime} Minutes</li>
             <li><span class="text-secondary">Status:</span> ${movie.status}</li>
           </ul>
           <h4>Production Companies</h4>
-          <div class="list-group">${movie.production_companies[0].name}, ${movie.production_companies[1].name}, ${movie.production_companies[2].name} </div>
+          <div class="list-group">
+          ${movie.production_companies.map((company) => `<span>${company.name}</span>`).join(", ")}
+   </div>
         </div>`;
 
   document.querySelector("#movie-details").appendChild(div);
@@ -143,6 +153,30 @@ function highlightSection() {
       link.classList.add("active");
     }
   });
+}
+
+function addCommasToNumber(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function displayBackgroundImage(type, backdropPath) {
+  if (type === "movie") {
+    const overlay = document.createElement("div");
+    overlay.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${backdropPath})`;
+    overlay.style.backgroundSize = "cover";
+    overlay.style.backgroundPosition = "center";
+    overlay.style.backgroundRepeat = "no-repeat";
+    overlay.style.opacity = "0.1";
+    overlay.style.zIndex = "-1";
+    overlay.style.width = "100vw";
+    overlay.style.height = "100vh";
+    overlay.style.position = "absolute";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    document.querySelector("#movie-details").appendChild(overlay);
+  } else {
+    document.querySelector("#tv-details").appendChild(overlay);
+  }
 }
 
 // Init App
