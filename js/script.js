@@ -277,9 +277,8 @@ async function displaySlider() {
             <h4 class="swiper-rating"><i class="fas fa-star text-secondary"></i> ${movie.vote_average.toFixed(1)} / 10</h4>
             `;
     document.querySelector(".swiper-wrapper").appendChild(div);
-
-    initSwiper();
   });
+  initSwiper();
 }
 
 // Init App
