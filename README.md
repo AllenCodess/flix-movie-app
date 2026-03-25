@@ -1,1 +1,3 @@
-#Flix Movie App
+# Flix Movie App
+
+(!Screenshot)[images/githubimg.png]
