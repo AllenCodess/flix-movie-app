@@ -287,20 +287,25 @@ function init() {
   switch (global.currentPage) {
     case "/":
     case "/index.html":
+    case "flix-movie-app/index.html":
       displaySlider();
       displayPopularMovies();
 
       break;
     case "/shows.html":
+    case "flix-movie-app/shows.html":
       displayPopularShows();
       break;
     case "/movie-details.html":
+    case "flix-movie-app/movie-details.html":
       MovieDetails();
       break;
     case "/tv-details.html":
+    case "flix-movie-app/tv-details.html":
       tvDetails();
       break;
     case "/search.html":
+    case "flix-movie-app/search.html":
       console.log("Search");
       break;
   }
