@@ -292,6 +292,7 @@ function init() {
 
       break;
     case "/shows.html":
+    case "/shows":
     case "/flix-movie-app/shows.html":
       displayPopularShows();
       break;
