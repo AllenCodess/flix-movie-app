@@ -287,7 +287,7 @@ function init() {
   switch (global.currentPage) {
     case "/":
     case "/index.html":
-    case "flix-movie-app/index.html":
+    case "/flix-movie-app/index.html":
       displaySlider();
       displayPopularMovies();
 
