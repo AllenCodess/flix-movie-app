@@ -293,19 +293,19 @@ function init() {
 
       break;
     case "/shows.html":
-    case "flix-movie-app/shows.html":
+    case "/flix-movie-app/shows.html":
       displayPopularShows();
       break;
     case "/movie-details.html":
-    case "flix-movie-app/movie-details.html":
+    case "/flix-movie-app/movie-details.html":
       MovieDetails();
       break;
     case "/tv-details.html":
-    case "flix-movie-app/tv-details.html":
+    case "/flix-movie-app/tv-details.html":
       tvDetails();
       break;
     case "/search.html":
-    case "flix-movie-app/search.html":
+    case "/flix-movie-app/search.html":
       console.log("Search");
       break;
   }
