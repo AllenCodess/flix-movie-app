@@ -265,7 +265,7 @@ function initSwiper() {
 async function displaySlider() {
   const { results } = await fetchAPIData("movie/now_playing");
 
-  console.log(results);
+  // console.log(results);
 
   results.forEach((movie) => {
     const div = document.createElement("div");
