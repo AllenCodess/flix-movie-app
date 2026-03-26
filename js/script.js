@@ -1,5 +1,11 @@
 const global = {
   currentPage: window.location.pathname,
+  search: {
+    term: "",
+    type: "",
+    page: 1,
+    totalPages: 1,
+  },
 };
 
 // Display Popular Movies
@@ -197,6 +203,15 @@ async function fetchAPIData(endpoint) {
   return data;
 }
 
+// Search API Data
+
+// This function allows me to capture the data I need from the url
+async function search() {
+  const queryString = window.location.search;
+  console.log(queryString);
+  const urlSearchParams = new URLSearchParams(queryString);
+  console.log(urlSearchParams.get("type"));
+}
 // Cosmetics
 function showSpinner() {
   document.querySelector(".spinner").classList.add("show");
@@ -306,7 +321,7 @@ function init() {
       break;
     case "/search.html":
     case "/flix-movie-app/search.html":
-      console.log("Search");
+      search();
       break;
   }
   highlightSection();
