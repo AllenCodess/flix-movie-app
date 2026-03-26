@@ -209,6 +209,18 @@ async function fetchAPIData(endpoint) {
 
 // Search API Data
 
+async function searchAPIData() {
+  const apiKey = global.api.apiKey;
+  const apiUrl = global.api.apiUrl;
+  showSpinner();
+  const response = await fetch(
+    `${apiUrl}search/${global.search.type}?api_key=${apiKey}&query=${global.search.term}`,
+  );
+  const data = await response.json();
+  hideSpinner();
+  return data;
+}
+
 // This function allows me to capture the data I need from the url
 async function search() {
   const queryString = window.location.search;
