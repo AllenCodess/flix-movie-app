@@ -6,6 +6,10 @@ const global = {
     page: 1,
     totalPages: 1,
   },
+  api: {
+    apiKey: "9de76fd013cee893b1bef49f5429526a",
+    apiUrl: "https://api.themoviedb.org/3/",
+  },
 };
 
 // Display Popular Movies
@@ -194,8 +198,8 @@ async function tvDetails() {
 
 // Fetches Data
 async function fetchAPIData(endpoint) {
-  const apiKey = "9de76fd013cee893b1bef49f5429526a";
-  const apiUrl = "https://api.themoviedb.org/3/";
+  const apiKey = global.api.apiKey;
+  const apiUrl = global.api.apiUrl;
   showSpinner();
   const response = await fetch(`${apiUrl}${endpoint}?api_key=${apiKey}`);
   const data = await response.json();
@@ -216,6 +220,8 @@ async function search() {
   console.log(global.search.type);
   if (global.search.term !== "" && global.search.term !== null) {
     // make request to display results
+    const results = await searchAPIData();
+    console.log(results);
   } else {
     showAlert("Please Enter a search term");
   }
