@@ -229,14 +229,53 @@ async function search() {
   global.search.type = urlSearchParams.get("type");
   global.search.term = urlSearchParams.get("search-term");
 
-  console.log(global.search.type);
   if (global.search.term !== "" && global.search.term !== null) {
     // make request to display results
-    const results = await searchAPIData();
+    const { results } = await searchAPIData();
     console.log(results);
+
+    if (results.length === 0) {
+      showAlert("No results found");
+      return;
+    }
+
+    displaySearchResults(results);
+
+    document.querySelector("#search-term").value = "";
   } else {
     showAlert("Please Enter a search term");
   }
+}
+
+function displaySearchResults(results) {
+  results.forEach((result) => {
+    const div = document.createElement("div");
+    div.classList.add("card");
+    div.innerHTML = `
+          <a href="${global.search.type}-details.html?id=${result.id}">
+            ${
+              result.poster_path
+                ? `<img
+              src="https://image.tmdb.org/t/p/w500${result.poster_path}"
+              class="card-img-top"
+              alt="${global.search.type === "movie" ? result.title : result.name}"
+            />`
+                : `<img 
+            src="../images/no-image.jpg"
+            class="card-img-top"
+            alt="${global.search.type === "movie" ? result.title : result.name}">`
+            }
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">${global.search.type === "movie" ? result.title : result.name}</h5>
+            <p class="card-text">
+              <small class="text-muted">${global.search.type === "movie" ? result.release_date : result.first_air_date}</small>
+            </p>
+          </div>
+      `;
+    const searchResultsEl = document.querySelector("#search-results");
+    searchResultsEl.appendChild(div);
+  });
 }
 
 function showAlert(message, className) {
