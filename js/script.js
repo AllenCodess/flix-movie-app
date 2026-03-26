@@ -208,9 +208,17 @@ async function fetchAPIData(endpoint) {
 // This function allows me to capture the data I need from the url
 async function search() {
   const queryString = window.location.search;
-  console.log(queryString);
   const urlSearchParams = new URLSearchParams(queryString);
-  console.log(urlSearchParams.get("type"));
+
+  global.search.type = urlSearchParams.get("type");
+  global.search.term = urlSearchParams.get("search-term");
+
+  console.log(global.search.type);
+  if (global.search.term !== "" && global.search.term !== null) {
+    // make request to display results
+  } else {
+    alert("this is an alert");
+  }
 }
 // Cosmetics
 function showSpinner() {
