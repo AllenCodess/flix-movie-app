@@ -217,9 +217,21 @@ async function search() {
   if (global.search.term !== "" && global.search.term !== null) {
     // make request to display results
   } else {
-    alert("this is an alert");
+    showAlert("Please Enter a search term");
   }
 }
+
+function showAlert(message, className) {
+  const alertEl = document.createElement("div");
+  alertEl.classList.add("alert", className);
+  alertEl.appendChild(document.createTextNode(message));
+  document.querySelector("#alert").appendChild(alertEl);
+
+  setTimeout(() => {
+    alertEl.remove();
+  }, 3000);
+}
+
 // Cosmetics
 function showSpinner() {
   document.querySelector(".spinner").classList.add("show");
