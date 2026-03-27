@@ -282,6 +282,28 @@ function displaySearchResults(results) {
     const searchResultsEl = document.querySelector("#search-results");
     searchResultsEl.appendChild(div);
   });
+
+  displayPagination();
+}
+
+// Display and create pagination
+function displayPagination() {
+  const div = document.createElement("div");
+  div.classList.add("pagination");
+  div.innerHTML = `
+   <button class="btn btn-primary" id="prev">Prev</button>
+          <button class="btn btn-primary" id="next">Next</button>
+          <div class="page-counter">Page ${global.search.page} of ${global.search.totalPages}</div>`;
+  document.querySelector("#pagination").appendChild(div);
+
+  // disabled buttons if on page
+  if (global.search.page === 1) {
+    document.querySelector("#prev").disabled = true;
+  }
+
+  if (global.search.page === global.search.totalPages) {
+    document.querySelector("#next").disabled = true;
+  }
 }
 
 function showAlert(message, className) {
