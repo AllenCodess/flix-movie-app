@@ -5,6 +5,7 @@ const global = {
     type: "",
     page: 1,
     totalPages: 1,
+    totalResults: 0,
   },
   api: {
     apiKey: "9de76fd013cee893b1bef49f5429526a",
@@ -231,8 +232,10 @@ async function search() {
 
   if (global.search.term !== "" && global.search.term !== null) {
     // make request to display results
-    const { results } = await searchAPIData();
-    console.log(results);
+    const { results, total_pages, page, total_results } = await searchAPIData();
+    global.search.page = page;
+    global.search.totalPages = total_pages;
+    global.search.totalResults = total_results;
 
     if (results.length === 0) {
       showAlert("No results found");
@@ -273,6 +276,9 @@ function displaySearchResults(results) {
             </p>
           </div>
       `;
+
+    document.querySelector("#search-results-heading").innerHTML =
+      ` <h2> ${results.length} of ${global.search.totalResults} Results for ${global.search.term}</h2>`;
     const searchResultsEl = document.querySelector("#search-results");
     searchResultsEl.appendChild(div);
   });
