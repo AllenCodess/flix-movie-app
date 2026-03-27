@@ -215,7 +215,7 @@ async function searchAPIData() {
   const apiUrl = global.api.apiUrl;
   showSpinner();
   const response = await fetch(
-    `${apiUrl}search/${global.search.type}?api_key=${apiKey}&query=${global.search.term}`,
+    `${apiUrl}search/${global.search.type}?api_key=${apiKey}&query=${global.search.term}&page=${global.search.page}`,
   );
   const data = await response.json();
   hideSpinner();
@@ -251,6 +251,11 @@ async function search() {
 }
 
 function displaySearchResults(results) {
+  // Clear previous results
+  document.querySelector("#search-results").innerHTML = "";
+  document.querySelector("#search-results-heading").innerHTML = "";
+  document.querySelector("#pagination").innerHTML = "";
+
   results.forEach((result) => {
     const div = document.createElement("div");
     div.classList.add("card");
@@ -304,6 +309,18 @@ function displayPagination() {
   if (global.search.page === global.search.totalPages) {
     document.querySelector("#next").disabled = true;
   }
+
+  document.querySelector("#next").addEventListener("click", async () => {
+    global.search.page++;
+    const { results, total_pages } = await searchAPIData();
+    displaySearchResults(results);
+  });
+
+  document.querySelector("#prev").addEventListener("click", async () => {
+    global.search.page--;
+    const { results, total_pages } = await searchAPIData();
+    displaySearchResults(results);
+  });
 }
 
 function showAlert(message, className) {
